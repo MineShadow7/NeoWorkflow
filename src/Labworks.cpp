@@ -1,23 +1,23 @@
 ﻿// Labworks.cpp: определяет точку входа для приложения.
 //
+#include "Labworks.h"
 
-#include <wx/wx.h>
-#include <wx/image.h>
-#include "cMain.h"
+wxIMPLEMENT_APP(cApp);
 
+cApp::cApp(){
 
-class cMain: public wxApp {
-public:
-    bool OnInit();
-};
+}
 
-IMPLEMENT_APP(cMain)
+cApp::~cApp(){
 
-bool cMain::OnInit()
+}
+
+bool cApp::OnInit()
 {
-    wxInitAllImageHandlers();
-    MyFrame* frame = new MyFrame(NULL, wxID_ANY, wxEmptyString);
-    SetTopWindow(frame);
-    frame->Show();
+    m_frame1 = new cMain();
+    m_frame1->Show();
+    
     return true;
 }
+// We can use WxWidgets for native cross-platform UI.
+// Todo: Add UI.

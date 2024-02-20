@@ -6,7 +6,7 @@ project(ProjectCpp)
 
 # Main executable for UNIX programm.
 if(UNIX)
-    add_executable(runmain src/Labworks.cpp src/cMain.h src/cMain.cpp)
+    add_executable(runmain src/Labworks.cpp src/Labworks.h src/cMain.h src/cMain.cpp)
     include_directories(${PROJECT_SOURCE_DIR}/submodule)
     add_subdirectory(submodules/wxWidgets)
     set(wxBUILD_SHARED OFF)
