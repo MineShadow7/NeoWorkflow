@@ -19,7 +19,7 @@ if(MSVC)
      if(wxWidgets_USE_FILE) # not defined in CONFIG mode
         include(${wxWidgets_USE_FILE})
      endif(wxWidgets_USE_FILE)
-    add_executable(runmain src/Labworks.cpp src/cMain.h src/cMain.cpp)
+    add_executable(runmain src/Labworks.cpp src/Labworks.h src/cMain.h src/cMain.cpp)
     target_link_libraries(runmain ${wxWidgets_LIBRARIES})
 endif(MSVC)
 # Set property for c++

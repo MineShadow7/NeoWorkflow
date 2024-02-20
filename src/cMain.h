@@ -1,6 +1,8 @@
 #pragma once
 #include <wx/wx.h>
 
+#define WinMain main
+
 class cMain : public wxFrame
 {
 public:
