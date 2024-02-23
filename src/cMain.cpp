@@ -70,3 +70,8 @@ cMain::~cMain()
 	m_button4->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( cMain::OnButtonExitClick ), NULL, this );
 
 }
+
+void cMain::OnButtonExitClick(wxCommandEvent& event){
+	this->Close();
+	event.Skip();
+}

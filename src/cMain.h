@@ -39,7 +39,7 @@ class cMain : public wxFrame
 		wxMenuBar* m_menubar1;
 
 		// Virtual event handlers, override them in your derived class
-		virtual void OnButtonExitClick( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnButtonExitClick( wxCommandEvent& event );
 
 
 	public:
