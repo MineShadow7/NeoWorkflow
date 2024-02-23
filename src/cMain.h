@@ -22,6 +22,8 @@
 #include <wx/icon.h>
 #include <wx/menu.h>
 #include <wx/frame.h>
+#include "libraries/lib_stack/stack.h"
+#include <iostream>
 
 ///////////////////////////////////////////////////////////////////////////
 

@@ -73,5 +73,10 @@ cMain::~cMain()
 
 void cMain::OnButtonExitClick(wxCommandEvent& event){
 	this->Close();
+	// Example of usage of dynamically built libraries in func
+	Stack<int>* st = new Stack<int>(2);
+	st->push(3);
+	std::cout << st->pop() << std::endl;
+	
 	event.Skip();
 }

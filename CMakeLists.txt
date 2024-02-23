@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 
 include(cmake/configure.cmake)
+include(cmake/cpplint.cmake)
 
 project(ProjectCpp)
 
@@ -25,15 +26,65 @@ endif(MSVC)
 # Set property for c++
 set_property(TARGET runmain PROPERTY CXX_STANDARD 20)
 
-# Add main libraries for programm.
-add_library(i_datastructure src/libraries/lib_i_datastructure/data_structure.cpp src/libraries/lib_i_datastructure/data_structure.h)
-add_library(i_table src/libraries/lib_i_table/table.cpp src/libraries/lib_i_table/table.h)
-add_library(list src/libraries/lib_list/list.cpp src/libraries/lib_list/list.h)
-add_library(polynomial src/libraries/lib_polynomial/polynomial.cpp src/libraries/lib_polynomial/polynomial.h)
-add_library(stack src/libraries/lib_stack/stack.cpp src/libraries/lib_stack/stack.h)
-add_library(table_hash_list src/libraries/lib_table_hash_list/hash_list.cpp src/libraries/lib_table_hash_list/hash_list.h)
-add_library(table_hash_vector src/libraries/lib_table_hash_vector/hash_vector.cpp src/libraries/lib_table_hash_vector/hash_vector.h)
-add_library(table_linear_array src/libraries/lib_table_linear_array/linear_array.cpp src/libraries/lib_table_linear_array/linear_array.h)
-add_library(table_linear_list src/libraries/lib_table_linear_list/linear_list.cpp src/libraries/lib_table_linear_list/linear_list.h)
-add_library(table_ordered_array src/libraries/lib_table_ordered_array/ordered_array.cpp src/libraries/lib_table_ordered_array/ordered_array.h)
-add_library(table_tree src/libraries/lib_table_tree/tree.cpp src/libraries/lib_table_tree/tree.h)
+# Добавляем пути к исходным файлам
+set(SOURCES
+    src/libraries/lib_i_datastructure/data_structure.cpp
+    src/libraries/lib_i_table/table.cpp
+    src/libraries/lib_list/list.cpp
+    src/libraries/lib_polynomial/polynomial.cpp
+    src/libraries/lib_stack/stack.cpp
+    src/libraries/lib_table_hash_list/hash_list.cpp
+    src/libraries/lib_table_hash_vector/hash_vector.cpp
+    src/libraries/lib_table_linear_array/linear_array.cpp
+    src/libraries/lib_table_linear_list/linear_list.cpp
+    src/libraries/lib_table_ordered_array/ordered_array.cpp
+    src/libraries/lib_table_tree/tree.cpp
+    # Другие исходные файлы .cpp
+)
+
+set(SOURCES
+    src/libraries/lib_i_datastructure/data_structure.h
+    src/libraries/lib_i_table/table.h
+    src/libraries/lib_list/list.h
+    src/libraries/lib_polynomial/polynomial.h
+    src/libraries/lib_stack/stack.h
+    src/libraries/lib_table_hash_list/hash_list.h
+    src/libraries/lib_table_hash_vector/hash_vector.h
+    src/libraries/lib_table_linear_array/linear_array.h
+    src/libraries/lib_table_linear_list/linear_list.h
+    src/libraries/lib_table_ordered_array/ordered_array.h
+    src/libraries/lib_table_tree/tree.h
+    # Другие исходные файлы .h
+)
+
+# Создаем директорию для собранных библиотек
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib_dynamic)
+
+# Добавляем рекурсивную функцию для компиляции файлов .cpp
+function(add_recursive_sources DIR)
+    file(GLOB_RECURSE SOURCES_TMP "${DIR}/*.cpp")
+    list(APPEND SOURCES ${SOURCES_TMP})
+endfunction()
+
+# Добавляем рекурсивную функцию для компиляции файлов .h
+function(add_recursive_headers DIR)
+    file(GLOB_RECURSE HEADERS_TMP "${DIR}/*.h")
+    list(APPEND HEADERS ${HEADERS_TMP})
+endfunction()
+
+# Вызываем рекурсивные функции для добавления файлов .cpp и .h
+add_recursive_sources(src/libraries)
+add_recursive_headers(src/libraries)
+
+# Создаем библиотеку с исходными файлами
+add_library(Libraries SHARED ${SOURCES} ${HEADERS})
+
+# Указываем папки с заголовочными файлами
+target_include_directories(Libraries PUBLIC src)
+
+# Указываем язык программирования для библиотек
+set_target_properties(Libraries PROPERTIES LINKER_LANGUAGE CXX)
+set_property(TARGET Libraries PROPERTY CXX_STANDARD 20)
+
+# Указываем путь к собранным библиотекам
+set_target_properties(Libraries PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/libs)
