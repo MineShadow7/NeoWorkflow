@@ -43,7 +43,7 @@ cMain::cMain( wxWindow* parent, wxWindowID id, const wxString& title, const wxPo
 
 	// Cell Defaults
 	m_grid2->SetDefaultCellAlignment( wxALIGN_CENTER, wxALIGN_CENTER );
-	fgSizer1->Add( m_grid2, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+	fgSizer1->Add( m_grid2, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL, 5 );
 
 
 	gSizer1->Add( fgSizer1, 1, wxEXPAND, 5 );
