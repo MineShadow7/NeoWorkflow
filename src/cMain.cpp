@@ -1,92 +1,72 @@
+///////////////////////////////////////////////////////////////////////////
+// C++ code generated with wxFormBuilder (version 4.0.0-0-g0efcecf)
+// http://www.wxformbuilder.org/
+//
+// PLEASE DO *NOT* EDIT THIS FILE!
+///////////////////////////////////////////////////////////////////////////
+
 #include "cMain.h"
 
-wxBEGIN_EVENT_TABLE(cMain, wxFrame)
+///////////////////////////////////////////////////////////////////////////
 
-wxEND_EVENT_TABLE()
-
-cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Starting Program Window", wxPoint(30, 30), wxSize(800, 600))
+cMain::cMain( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
 {
-    btn = new wxButton*[nFieldWidth * nFieldHeight];
-    wxGridSizer *grid = new wxGridSizer(nFieldWidth, nFieldHeight, 0, 0);
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
-    nField = new int[nFieldWidth * nFieldHeight];
+	wxGridSizer* gSizer1;
+	gSizer1 = new wxGridSizer( 2, 1, 0, 0 );
 
-    for(int x = 0; x < nFieldWidth; x++){
-        for(int y = 0; y < nFieldHeight; y++){
-            btn[y*nFieldWidth + x] = new wxButton(this, 10000 + (y * nFieldWidth + x));
-            grid->Add(btn[y*nFieldWidth + x], 1, wxEXPAND | wxALL);
+	wxFlexGridSizer* fgSizer1;
+	fgSizer1 = new wxFlexGridSizer( 0, 2, 0, 0 );
+	fgSizer1->SetFlexibleDirection( wxBOTH );
+	fgSizer1->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
-            btn[y*nFieldWidth + x]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonClicked, this);
-            nField[y*nFieldWidth + x] = 0;
-        }
-    }
+	m_grid2 = new wxGrid( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
 
-    this->SetSizer(grid);
-    grid->Layout();
-    // m_btn1 = new wxButton(this, 10001, "Click Me", wxPoint(10, 10), wxSize(150, 50));
-    // m_txt1 = new wxTextCtrl(this, wxID_ANY, "", wxPoint(10, 70), wxSize(300, 30));
-    // m_list1 = new wxListBox(this, wxID_ANY, wxPoint(10, 110), wxSize(300, 300));
+	// Grid
+	m_grid2->CreateGrid( 4, 5 );
+	m_grid2->EnableEditing( true );
+	m_grid2->EnableGridLines( true );
+	m_grid2->EnableDragGridSize( false );
+	m_grid2->SetMargins( 0, 0 );
+
+	// Columns
+	m_grid2->EnableDragColMove( false );
+	m_grid2->EnableDragColSize( true );
+	m_grid2->SetColLabelAlignment( wxALIGN_CENTER, wxALIGN_CENTER );
+
+	// Rows
+	m_grid2->EnableDragRowSize( true );
+	m_grid2->SetRowLabelAlignment( wxALIGN_CENTER, wxALIGN_CENTER );
+
+	// Label Appearance
+
+	// Cell Defaults
+	m_grid2->SetDefaultCellAlignment( wxALIGN_CENTER, wxALIGN_CENTER );
+	fgSizer1->Add( m_grid2, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
+
+	gSizer1->Add( fgSizer1, 1, wxEXPAND, 5 );
+
+	m_button4 = new wxButton( this, wxID_ANY, wxT("Exit"), wxDefaultPosition, wxDefaultSize, 0 );
+	gSizer1->Add( m_button4, 0, wxALIGN_RIGHT|wxALIGN_BOTTOM|wxALL, 5 );
+
+
+	this->SetSizer( gSizer1 );
+	this->Layout();
+	m_menubar1 = new wxMenuBar( 0 );
+	this->SetMenuBar( m_menubar1 );
+
+
+	this->Centre( wxBOTH );
+
+	// Connect Events
+	m_button4->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( cMain::OnButtonExitClick ), NULL, this );
 }
 
-cMain::~cMain(){
-    delete[]btn;
-}
+cMain::~cMain()
+{
+	// Disconnect Events
+	m_button4->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( cMain::OnButtonExitClick ), NULL, this );
 
-void cMain::OnButtonClicked(wxCommandEvent &evt){
-    //m_list1->AppendString(m_txt1->GetValue());
-
-    // Get coordinate of button in field array
-    int x = (evt.GetId() - 10000) % nFieldWidth;
-    int y = (evt.GetId() - 10000) / nFieldHeight;
-
-    if(bFirstClick){
-        int mines = 30;
-        while(mines){
-            int rx = rand() % nFieldWidth;
-            int ry = rand() % nFieldHeight;
-
-            if(nField[ry * nFieldWidth + rx] == 0 && rx != x && ry != y){
-                nField[ry * nFieldWidth + rx] = -1;
-                mines--;
-            }
-        }
-        bFirstClick = false;
-    }
-    // Disable button after clicked. MineSweeper.
-    btn[y*nFieldWidth + x]->Enable(false);
-
-    // Check if clicked a mine.
-    if(nField[y*nFieldWidth + x] == -1){
-        wxMessageBox("You got the bomb! It's game over.. GGs...");
-        
-        //Reset the game
-        bFirstClick = true;
-        for(int x = 0; x < nFieldWidth; x++){
-            for(int y = 0; y < nFieldHeight; y++){
-                nField[y * nFieldWidth + x] = 0;
-                btn[y * nFieldWidth + x]->SetLabel("");
-                btn[y * nFieldWidth + x]->Enable(true);
-            }
-        }
-
-    }
-    else
-    {
-        // Count neighbouring mines
-        int mine_count = 0;
-        for(int i = -1; i < 2; i++){
-            for(int j = -1; j < 2; j++){
-                if(x + i >= 0 && x + i < nFieldWidth && y + j >= 0 && y + j < nFieldHeight){
-                    if(nField[(y + j) * nFieldWidth + (x + i)] == -1)
-                        mine_count++;
-                }
-            }
-        }
-
-        // If counted mines, then update buttons lables > 0
-        if(mine_count > 0){
-            btn[y * nFieldWidth + x]->SetLabel(std::to_string(mine_count));
-        }
-    }
-    evt.Skip();
 }

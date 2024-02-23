@@ -14,7 +14,10 @@ cApp::~cApp(){
 
 bool cApp::OnInit()
 {
-    m_frame1 = new cMain();
+    wxWindow* parent = nullptr;
+    const wxSize& size = {800, 600};
+    long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL;
+    m_frame1 = new cMain(nullptr, wxID_ANY, "Title",  {-1, -1}, size, wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
     m_frame1->Show();
     
     return true;
