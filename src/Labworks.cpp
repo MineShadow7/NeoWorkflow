@@ -2,6 +2,8 @@
 //
 #include "Labworks.h"
 
+#define WinMain main
+
 wxIMPLEMENT_APP(cApp);
 
 cApp::cApp(){
