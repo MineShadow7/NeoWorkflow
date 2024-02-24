@@ -40,7 +40,7 @@ set(SOURCES
     # Другие исходные файлы .cpp
 )
 
-set(SOURCES
+set(HEADERS
     src/libraries/lib_i_datastructure/data_structure.h
     src/libraries/lib_i_table/table.h
     src/libraries/lib_list/list.h
@@ -86,3 +86,6 @@ set_property(TARGET dynamic_libs PROPERTY CXX_STANDARD 20)
 
 # Указываем путь к собранным библиотекам
 set_target_properties(dynamic_libs PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/libs)
+
+install(TARGETS runmain RUNTIME DESTINATION bin)
+include(CPack)
