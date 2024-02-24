@@ -15,12 +15,11 @@ endif(UNIX)
 
 # Main executable for Windows programm.
 if(MSVC)
-    find_package(wxWidgets REQUIRED COMPONENTS net core base)
-     if(wxWidgets_USE_FILE) # not defined in CONFIG mode
-        include(${wxWidgets_USE_FILE})
-     endif(wxWidgets_USE_FILE)
+    include_directories(${PROJECT_SOURCE_DIR}/submodule)
+    set(wxBUILD_SHARED OFF)
+    add_subdirectory(submodules/wxWidgets)
     add_executable(runmain src/Labworks.cpp src/Labworks.h src/cMain.h src/cMain.cpp)
-    target_link_libraries(runmain ${wxWidgets_LIBRARIES})
+    target_link_libraries(runmain wx::net wx::core wx::base)
 endif(MSVC)
 # Set property for c++
 set_property(TARGET runmain PROPERTY CXX_STANDARD 20)
@@ -76,14 +75,14 @@ add_recursive_sources(src/libraries)
 add_recursive_headers(src/libraries)
 
 # Создаем библиотеку с исходными файлами
-add_library(Libraries SHARED ${SOURCES} ${HEADERS})
+add_library(dynamic_libs SHARED ${SOURCES} ${HEADERS})
 
 # Указываем папки с заголовочными файлами
-target_include_directories(Libraries PUBLIC src)
+target_include_directoriesdynamic_libs PUBLIC src)
 
 # Указываем язык программирования для библиотек
-set_target_properties(Libraries PROPERTIES LINKER_LANGUAGE CXX)
-set_property(TARGET Libraries PROPERTY CXX_STANDARD 20)
+set_target_properties(Libraries_custom PROPERTIES LINKER_LANGUAGE CXX)
+set_property(TARGET dynamic_libs PROPERTY CXX_STANDARD 20)
 
 # Указываем путь к собранным библиотекам
-set_target_properties(Libraries PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/libs)
+set_target_properties(dynamic_libs PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/libs)
