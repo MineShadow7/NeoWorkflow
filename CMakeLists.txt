@@ -2,15 +2,15 @@ cmake_minimum_required(VERSION 3.12)
 
 include(cmake/configure.cmake)
 
-project(ProjectCpp)
+project(NeoWorkflow)
 
 # Main executable for UNIX programm.
 if(UNIX)
-    add_executable(runmain src/Labworks.cpp src/Labworks.h src/cMain.h src/cMain.cpp)
+    add_executable(neoworkflow src/Labworks.cpp src/Labworks.h src/cMain.h src/cMain.cpp)
     include_directories(${PROJECT_SOURCE_DIR}/submodule)
     add_subdirectory(submodules/wxWidgets)
     set(wxBUILD_SHARED OFF)
-    target_link_libraries(runmain wx::net wx::core wx::base)
+    target_link_libraries(neoworkflow wx::net wx::core wx::base)
 endif(UNIX)
 
 # Main executable for Windows programm.
@@ -18,11 +18,11 @@ if(MSVC)
     include_directories(${PROJECT_SOURCE_DIR}/submodule)
     set(wxBUILD_SHARED OFF)
     add_subdirectory(submodules/wxWidgets)
-    add_executable(runmain src/Labworks.cpp src/Labworks.h src/cMain.h src/cMain.cpp)
-    target_link_libraries(runmain wx::net wx::core wx::base)
+    add_executable(neoworkflow src/Labworks.cpp src/Labworks.h src/cMain.h src/cMain.cpp)
+    target_link_libraries(neoworkflow wx::net wx::core wx::base)
 endif(MSVC)
 # Set property for c++
-set_property(TARGET runmain PROPERTY CXX_STANDARD 20)
+set_property(TARGET neoworkflow PROPERTY CXX_STANDARD 20)
 
 # Добавляем пути к исходным файлам
 set(SOURCES
@@ -87,5 +87,5 @@ set_property(TARGET dynamic_libs PROPERTY CXX_STANDARD 20)
 # Указываем путь к собранным библиотекам
 set_target_properties(dynamic_libs PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/libs)
 
-install(TARGETS runmain RUNTIME DESTINATION bin)
+install(TARGETS neoworkflow RUNTIME DESTINATION bin)
 include(CPack)
