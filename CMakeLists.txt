@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
 
 include(cmake/configure.cmake)
-include(cmake/cpplint.cmake)
 
 project(ProjectCpp)
 

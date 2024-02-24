@@ -1,25 +1,12 @@
-///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version 4.0.0-0-g0efcecf)
-// http://www.wxformbuilder.org/
-//
-// PLEASE DO *NOT* EDIT THIS FILE!
-///////////////////////////////////////////////////////////////////////////
-
 #include "cMain.h"
 
-///////////////////////////////////////////////////////////////////////////
 
 cMain::cMain( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
 {
-	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
 	wxGridSizer* gSizer1;
-	gSizer1 = new wxGridSizer( 2, 1, 0, 0 );
-
-	wxFlexGridSizer* fgSizer1;
-	fgSizer1 = new wxFlexGridSizer( 0, 2, 0, 0 );
-	fgSizer1->SetFlexibleDirection( wxBOTH );
-	fgSizer1->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	gSizer1 = new wxGridSizer( 0, 1, 0, 0 );
 
 	m_grid2 = new wxGrid( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
 
@@ -43,10 +30,16 @@ cMain::cMain( wxWindow* parent, wxWindowID id, const wxString& title, const wxPo
 
 	// Cell Defaults
 	m_grid2->SetDefaultCellAlignment( wxALIGN_CENTER, wxALIGN_CENTER );
-	fgSizer1->Add( m_grid2, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL, 5 );
+	gSizer1->Add( m_grid2, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5 );
 
 
-	gSizer1->Add( fgSizer1, 1, wxEXPAND, 5 );
+	gSizer1->Add( 0, 0, 0, wxALL, 5 );
+
+	m_button2 = new wxButton( this, wxID_ANY, wxT("Fill with Numbers"), wxDefaultPosition, wxDefaultSize, 0 );
+	gSizer1->Add( m_button2, 0, wxALIGN_BOTTOM|wxTOP|wxRIGHT|wxLEFT, 5 );
+
+	m_button3 = new wxButton( this, wxID_ANY, wxT("Fill with zeros"), wxDefaultPosition, wxDefaultSize, 0 );
+	gSizer1->Add( m_button3, 0, wxALL, 5 );
 
 	m_button4 = new wxButton( this, wxID_ANY, wxT("Exit"), wxDefaultPosition, wxDefaultSize, 0 );
 	gSizer1->Add( m_button4, 0, wxALIGN_RIGHT|wxALIGN_BOTTOM|wxALL, 5 );
@@ -54,19 +47,20 @@ cMain::cMain( wxWindow* parent, wxWindowID id, const wxString& title, const wxPo
 
 	this->SetSizer( gSizer1 );
 	this->Layout();
-	m_menubar1 = new wxMenuBar( 0 );
-	this->SetMenuBar( m_menubar1 );
-
 
 	this->Centre( wxBOTH );
 
 	// Connect Events
+	m_button2->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( cMain::onNumbersClick ), NULL, this );
+	m_button3->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( cMain::onZerosClick ), NULL, this );
 	m_button4->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( cMain::OnButtonExitClick ), NULL, this );
 }
 
 cMain::~cMain()
 {
 	// Disconnect Events
+	m_button2->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( cMain::onNumbersClick ), NULL, this );
+	m_button3->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( cMain::onZerosClick ), NULL, this );
 	m_button4->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( cMain::OnButtonExitClick ), NULL, this );
 
 }
@@ -79,4 +73,27 @@ void cMain::OnButtonExitClick(wxCommandEvent& event){
 	std::cout << st->pop() << std::endl;
 	
 	event.Skip();
+}
+
+void cMain::onZerosClick(wxCommandEvent& event){
+	m_grid2->ClearGrid();
+    for(int i = 0; i < 4; i++){
+        for(int j = 0; j < 5; j++){
+            m_grid2->SetCellValue({i,j}, "0");
+        }
+    }
+    event.Skip();
+}
+
+void cMain::onNumbersClick(wxCommandEvent& event){
+	int min = 1;
+	int max = 25;
+	m_grid2->ClearGrid();
+    for(int i = 0; i < 4; i++){
+        for(int j = 0; j < 5; j++){
+			int x = rand() % (max - min + 1) + min;
+            m_grid2->SetCellValue({i,j}, std::to_string(x));
+        }
+    }
+    event.Skip();
 }
