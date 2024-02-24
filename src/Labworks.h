@@ -1,5 +1,5 @@
-// Labworks.h : включаемый файл для стандартных системных включаемых файлов
-// или включаемые файлы для конкретного проекта.
+// Labworks.h : Класс объявления приложения cApp.
+// cApp является основным классом приложения.
 
 #include <wx/wx.h>
 #include "cMain.h"
@@ -11,9 +11,8 @@ public:
     ~cApp();
 
 private:
-    cMain* m_frame1 = nullptr;
+    cMain *m_frame1 = nullptr;
 
 public:
     virtual bool OnInit();
 };
-// TODO: установите здесь ссылки на дополнительные заголовки, требующиеся для программы.
