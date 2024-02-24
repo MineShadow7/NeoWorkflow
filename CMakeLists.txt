@@ -78,10 +78,10 @@ add_recursive_headers(src/libraries)
 add_library(dynamic_libs SHARED ${SOURCES} ${HEADERS})
 
 # Указываем папки с заголовочными файлами
-target_include_directoriesdynamic_libs PUBLIC src)
+target_include_directories(dynamic_libs PUBLIC src)
 
 # Указываем язык программирования для библиотек
-set_target_properties(Libraries_custom PROPERTIES LINKER_LANGUAGE CXX)
+set_target_properties(dynamic_libs  PROPERTIES LINKER_LANGUAGE CXX)
 set_property(TARGET dynamic_libs PROPERTY CXX_STANDARD 20)
 
 # Указываем путь к собранным библиотекам
